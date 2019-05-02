@@ -19,7 +19,7 @@ Please use this bibtex if you want to cite this repository in your publications:
 
 ```
 @misc{gym_minigrid,
-  author = {Chevalier-Boisvert, Maxime and Willems, Lucas},
+  author = {Chevalier-Boisvert, Maxime and Willems, Lucas and Pal, Suman},
   title = {Minimalistic Gridworld Environment for OpenAI Gym},
   year = {2018},
   publisher = {GitHub},
@@ -28,11 +28,17 @@ Please use this bibtex if you want to cite this repository in your publications:
 }
 ```
 
-This environment has been built as part of work done at the [MILA](https://mila.quebec/en/).
+This environment has been built as part of work done at the [MILA](https://mila.quebec/en/). The Dynamic obstacles environment has been added as part of work done at [IAS in TU Darmstadt](https://www.ias.informatik.tu-darmstadt.de/) and the University of Genoa for mobile robot navigation with dynamic obstacles.
 
 ## Installation
 
-Clone this repository and install the dependencies with `pip3`:
+There is now a [pip package](https://pypi.org/project/gym-minigrid/) available, which is updated periodically:
+
+```
+pip3 install gym-minigrid
+```
+
+Alternatively, to get the latest version of MiniGrid, you can clone this repository and install the dependencies with `pip3`:
 
 ```
 git clone https://github.com/maximecb/gym-minigrid.git
@@ -140,6 +146,20 @@ The random variants of the environment have the agent starting at a random
 position for each episode, while the regular variants have the agent always
 starting in the corner opposite to the goal.
 
+### Four rooms environment
+
+Registered configurations:
+- `MiniGrid-FourRooms-v0`
+
+<p align="center">
+<img src="/figures/four-rooms-env.png" width=380>
+</p>
+
+Classic four room reinforcement learning environment. The agent must navigate
+in a maze composed of four rooms interconnected by 4 gaps in the walls. To
+obtain a reward, the agent must reach the green goal square. Both the agent
+and the goal square are randomly placed in any of the four rooms.
+
 ### Door & key environment
 
 Registered configurations:
@@ -161,6 +181,7 @@ useful to experiment with curiosity or curriculum learning.
 
 Registered configurations:
 - `MiniGrid-MultiRoom-N2-S4-v0` (two small rooms)
+- `MiniGrid-MultiRoom-N4-S5-v0` (four rooms)
 - `MiniGrid-MultiRoom-N6-v0` (six rooms)
 
 <p align="center">
@@ -379,6 +400,22 @@ has a single crossing point which can be safely used;  Luckily, a path to the
 goal is guaranteed to exist. This environment is useful for studying safety and
 safe exploration.
 
+## Distributional shift environment
+
+Registered configurations:
+- `MiniGrid-DistShift1-v0`
+- `MiniGrid-DistShift2-v0`
+
+This environment is based on one of the DeepMind [AI safety gridworlds](https://github.com/deepmind/ai-safety-gridworlds).
+The agent starts in the top-left corner and must reach the goal which is in the top-right corner, but has to avoid stepping
+into lava on its way. The aim of this environment is to test an agent's ability to generalize. There are two slightly
+different variants of the environment, so that the agent can be trained on one variant and tested on the other.
+
+<p align="center">
+  <img src="figures/DistShift1.png" width="200">
+  <img src="figures/DistShift2.png" width="200">
+</p>
+
 ## Simple crossing environment
 
 Registered configurations:
@@ -398,3 +435,19 @@ Similar to the `LavaCrossing` environment, the agent has to reach the green
 goal square on the other corner of the room, however lava is replaced by
 walls. This MDP is therefore much easier and and maybe useful for quickly
 testing your algorithms.
+
+### Dynamic obstacles environment
+
+Registered configurations:
+- `MiniGrid-Dynamic-Obstacles-5x5-v0`
+- `MiniGrid-Dynamic-Obstacles-Random-5x5-v0`
+- `MiniGrid-Dynamic-Obstacles-6x6-v0`
+- `MiniGrid-Dynamic-Obstacles-Random-6x6-v0`
+- `MiniGrid-Dynamic-Obstacles-8x8-v0`
+- `MiniGrid-Dynamic-Obstacles-16x16-v0`
+
+<p align="center">
+<img src="/figures/dynamic_obstacles.gif">
+</p>
+
+This environment is an empty room with moving obstacles. The goal of the agent is to reach the green goal square without colliding with any obstacle. A large penalty is subtracted if the agent collides with an obstacle and the episode finishes. This environment is useful to test Dynamic Obstacle Avoidance for mobile robots with Reinforcement Learning in Partial Observability.
