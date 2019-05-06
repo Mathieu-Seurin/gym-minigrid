@@ -15,7 +15,12 @@ class SafeCrossing(CrossingEnv):
         self.observation_space = spaces.Dict(observation_space)
         self.reward_when_falling = reward_when_falling
 
+        # Reduce number of action so the problem is easier
+        NUM_ACTIONS = 3
+
+        self.action_space = spaces.Discrete(NUM_ACTIONS)
         self.action_map = list(map(lambda x: str(x)[8:], self.actions))
+        self.action_map = self.action_map[:NUM_ACTIONS]
 
     def reset(self):
         obs = super().reset()
@@ -31,6 +36,8 @@ class SafeCrossing(CrossingEnv):
         done = False
         dont_do_this = False
         info = {}
+
+        assert self.action_space.contains(action), "Warning, action not in action space"
 
         # Get the position in front of the agent
         fwd_pos = self.front_pos
