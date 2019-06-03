@@ -45,6 +45,7 @@ OBJECT_TO_IDX = {
     'goal'          : 8,
     'lava'          : 9,
     'agent'         : 10,
+    'water'         : 11,
 }
 
 IDX_TO_OBJECT = dict(zip(OBJECT_TO_IDX.values(), OBJECT_TO_IDX.keys()))
@@ -147,6 +148,55 @@ class Floor(WorldObj):
             (CELL_PIXELS,           1),
             (1          ,           1)
         ])
+
+
+
+class Water(WorldObj):
+    def __init__(self):
+        super().__init__('water', 'blue')
+
+    def can_overlap(self):
+        return True
+
+    def render(self, r):
+        blue = 0, 0, 255
+        r.setLineColor(*blue)
+        r.setColor(*blue)
+        r.drawPolygon([
+            (0          , CELL_PIXELS),
+            (CELL_PIXELS, CELL_PIXELS),
+            (CELL_PIXELS, 0),
+            (0          , 0)
+        ])
+
+        # drawing the waves
+        r.setLineColor(0, 0, 0)
+
+        r.drawPolyline([
+            (.1 * CELL_PIXELS, .3 * CELL_PIXELS),
+            (.3 * CELL_PIXELS, .4 * CELL_PIXELS),
+            (.5 * CELL_PIXELS, .3 * CELL_PIXELS),
+            (.7 * CELL_PIXELS, .4 * CELL_PIXELS),
+            (.9 * CELL_PIXELS, .3 * CELL_PIXELS),
+        ])
+
+        r.drawPolyline([
+            (.1 * CELL_PIXELS, .5 * CELL_PIXELS),
+            (.3 * CELL_PIXELS, .6 * CELL_PIXELS),
+            (.5 * CELL_PIXELS, .5 * CELL_PIXELS),
+            (.7 * CELL_PIXELS, .6 * CELL_PIXELS),
+            (.9 * CELL_PIXELS, .5 * CELL_PIXELS),
+        ])
+
+        r.drawPolyline([
+            (.1 * CELL_PIXELS, .7 * CELL_PIXELS),
+            (.3 * CELL_PIXELS, .8 * CELL_PIXELS),
+            (.5 * CELL_PIXELS, .7 * CELL_PIXELS),
+            (.7 * CELL_PIXELS, .8 * CELL_PIXELS),
+            (.9 * CELL_PIXELS, .7 * CELL_PIXELS),
+        ])
+
+
 
 class Lava(WorldObj):
     def __init__(self):
