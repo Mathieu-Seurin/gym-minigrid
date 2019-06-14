@@ -15,7 +15,11 @@ COLORS = {
     'blue'  : np.array([0, 0, 255]),
     'purple': np.array([112, 39, 195]),
     'yellow': np.array([255, 255, 0]),
-    'grey'  : np.array([100, 100, 100])
+    'grey'  : np.array([100, 100, 100]),
+    'pink'  : np.array([255, 0, 144]),
+    'brown' : np.array([93, 67, 44]),
+    'lblue' : np.array([115, 194, 251]),
+    'lgreen': np.array([152, 251, 152])
 }
 
 COLOR_NAMES = sorted(list(COLORS.keys()))
@@ -27,7 +31,11 @@ COLOR_TO_IDX = {
     'blue'  : 2,
     'purple': 3,
     'yellow': 4,
-    'grey'  : 5
+    'grey'  : 5,
+    'pink'  : 6,
+    'brown' : 7,
+    'lblue' : 8,
+    'lgreen': 9
 }
 
 IDX_TO_COLOR = dict(zip(COLOR_TO_IDX.values(), COLOR_TO_IDX.keys()))
@@ -248,7 +256,7 @@ class Wall(WorldObj):
         super().__init__('wall', color)
 
     def see_behind(self):
-        return False
+        return True
 
     def render(self, r):
         self._set_color(r)
