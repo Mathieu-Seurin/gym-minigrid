@@ -12,12 +12,12 @@ N_SUPPLEMENTARY_COLOR = 100
 
 # Map of color names to RGB values
 COLORS = {
+    'grey': np.array([100, 100, 100]),
     'red'   : np.array([255, 0, 0]),
     'green' : np.array([0, 255, 0]),
     'blue'  : np.array([0, 0, 255]),
     'purple': np.array([112, 39, 195]),
     'yellow': np.array([255, 255, 0]),
-    'grey'  : np.array([100, 100, 100]),
     'pink'  : np.array([255, 0, 144]),
     'brown' : np.array([93, 67, 44]),
     'lblue' : np.array([115, 194, 251]),
@@ -35,19 +35,16 @@ while True:
     else:
         print("Problem, regenerating colors")
 
-
-
-
 COLOR_NAMES = sorted(list(COLORS.keys()))
 
 # Used to map colors to integers
 COLOR_TO_IDX = {
-    'red'   : 0,
+    'grey'  : 0,
     'green' : 1,
     'blue'  : 2,
     'purple': 3,
     'yellow': 4,
-    'grey'  : 5,
+    'red'   : 5,
     'pink'  : 6,
     'brown' : 7,
     'lblue' : 8,

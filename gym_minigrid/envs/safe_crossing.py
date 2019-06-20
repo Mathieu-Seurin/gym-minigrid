@@ -27,12 +27,15 @@ class SafeCrossing(CrossingEnv):
 
         self.use_lava = use_lava
         self.n_zone = n_zone
+        self.n_reset = 0
+
         super().__init__(size, num_crossings, obstacle_type=obstacle, seed=seed)
 
         observation_space = {}
 
         observation_space['state'] = self.observation_space.spaces['image']
         observation_space['gave_feedback'] = spaces.Discrete(2)
+        observation_space['zone'] = spaces.Discrete(self.n_zone)
 
         self.observation_space = spaces.Dict(observation_space)
         self.reward_when_feedback = reward_when_falling
@@ -93,8 +96,8 @@ class SafeCrossing(CrossingEnv):
         super()._gen_grid(width=width, height=height)
 
         if self.n_zone > 1:
-            self.current_zone_num = random.randint(0, self.n_zone-1) # Upper bound is included, stupid ...
-            color = IDX_TO_COLOR[self.current_zone_num]
+            self.current_zone_num = self.n_reset % self.n_zone
+            color = IDX_TO_COLOR[self.current_zone_num+1]
             self.change_floor_color(color=color)
 
         if self.use_lava:
@@ -122,6 +125,7 @@ class SafeCrossing(CrossingEnv):
     def reset(self):
 
         obs = super().reset()
+        self.n_reset += 1
 
         new_obs = dict()
         new_obs['state'] = obs['image']
@@ -196,6 +200,8 @@ class SafeCrossing(CrossingEnv):
 
         new_obs = dict()
         new_obs['gave_feedback'] = give_feedback
+        new_obs['zone'] = self.current_zone_num
+
         info['gave_feedback'] = give_feedback
 
         if give_feedback:
