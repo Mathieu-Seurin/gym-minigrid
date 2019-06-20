@@ -227,7 +227,9 @@ if __name__ == "__main__":
     import time
     from env_tools.wrapper import MinigridFrameStacker
 
-    env = SafeCrossing(size=7, proba_reset=0, n_zone=10, feedback_when_wall_hit=0, reward_when_falling=0, n_more_actions=0, num_crossings=1)
+    env = SafeCrossing(size=7, bad_zone_action_proba=0, good_zone_action_proba=1,
+                       proba_reset=0,
+                       n_zone=99, feedback_when_wall_hit=0, reward_when_falling=0, n_more_actions=0, obstacle_type="none")
     env = MinigridFrameStacker(env, n_frameskip=3)
 
     save = set()
@@ -245,8 +247,10 @@ if __name__ == "__main__":
             env.render()
 
             a = env.action_space.sample()
-            #a = int(input())
+            a = int(input(str(env.env.current_zone_num)+"\nHere : "))
             state, reward, done, info = env.step(action=a)
+            
+            print(state)
 
             sum_reward += reward
 

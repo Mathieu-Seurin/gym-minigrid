@@ -8,6 +8,8 @@ from gym.utils import seeding
 # Size in pixels of a cell in the full-scale human view
 CELL_PIXELS = 32
 
+N_SUPPLEMENTARY_COLOR = 100
+
 # Map of color names to RGB values
 COLORS = {
     'red'   : np.array([255, 0, 0]),
@@ -21,6 +23,20 @@ COLORS = {
     'lblue' : np.array([115, 194, 251]),
     'lgreen': np.array([152, 251, 152])
 }
+
+len_base_color = len(COLORS)
+
+while True:
+    for i in range(N_SUPPLEMENTARY_COLOR):
+        COLORS['color'+str(i+len_base_color)] = np.random.randint(0, 255, size=3)
+    if len(set(tuple(color) for color in COLORS.values())) == len(COLORS):
+        print("Colors generation ok")
+        break
+    else:
+        print("Problem, regenerating colors")
+
+
+
 
 COLOR_NAMES = sorted(list(COLORS.keys()))
 
@@ -37,6 +53,9 @@ COLOR_TO_IDX = {
     'lblue' : 8,
     'lgreen': 9
 }
+
+for i in range(N_SUPPLEMENTARY_COLOR):
+    COLOR_TO_IDX['color'+str(i+len_base_color)] = i+len_base_color
 
 IDX_TO_COLOR = dict(zip(COLOR_TO_IDX.values(), COLOR_TO_IDX.keys()))
 
